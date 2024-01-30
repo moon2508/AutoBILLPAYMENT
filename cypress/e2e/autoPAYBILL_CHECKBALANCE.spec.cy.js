@@ -47,8 +47,8 @@ const url_base = 'http://222.252.17.162:8080/v1/sandbox/services/paybill'
 const username = 'integrate_account';
 const password = 'a1ec3b73f427c514ab64ce99c891b73f';
 
-describe('AUTOPAYBILL GETBILL', () => {
-  it('GETBILL', () => {
+describe('AUTOPAYBILL CHECKBALANCE', () => {
+  it('CHECKBALANCE', () => {
     const rqID = requestID;
     cy.log('REQUESTID:'+ rqID);
     const service_code = 'TV_FPT';

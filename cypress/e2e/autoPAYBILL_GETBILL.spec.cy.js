@@ -57,30 +57,7 @@ describe('AUTOPAYBILL GETBILL', () => {
     const signature = signDataWithRSA(data_getBill,privateKeyData);
     cy.log(data_getBill)
     cy.log(signature)
-    cy.request({
-      method: 'POST',
-      url: url_base,
-      headers: {
-        'Content-Type': 'application/json',
-
-       
-      },
-      body: `
-      {"pr_code":"1009",
-      "message":
-      {"username":"${username}","password":"${password}","service_code":"${service_code}",
-      "billing_code":"${billing_code}",
-      "partner_trans_id":"${rqID}",
-      "authkey":"${signature}"}}
-        `,
-    }).then((response) => {
-      // Kiểm tra phản hồi
-      expect(response.status).to.eq(200);
-      cy.log('Response body:'+ JSON.stringify(response.body, null, 2));
-      cy.log(response.body.data.reference_code)
-      
- 
-  });
+    cy.getBILL(username,password,service_code,billing_code,rqID,signature,url_base);
 });
 
 
