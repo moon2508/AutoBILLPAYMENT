@@ -43,11 +43,11 @@ const hour = currentDate.getHours();
 const minute = currentDate.getMinutes();
 const seconds = currentDate.getSeconds();
 const formattedDate = `${day}${month}${year}`;
-const formattedTime = `${hour}${minute}${seconds}`
+const formattedTime = `${hour}${minute}${seconds}`;
 
 const requestID = 'HangPTDV_CHECKBALANCE'  + formattedDate +formattedTime+ randomNum;
 //Khai báo các thông tin 
-const url_base = 'http://222.252.17.162:8080/v1/sandbox/services/paybill'
+const url_base = 'http://222.252.17.162:8080/v1/sandbox/services/paybill';
 
 const username = 'integrate_account';
 const password = 'a1ec3b73f427c514ab64ce99c891b73f';

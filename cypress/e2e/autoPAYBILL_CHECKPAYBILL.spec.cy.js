@@ -43,10 +43,10 @@ const hour = currentDate.getHours();
 const minute = currentDate.getMinutes();
 const seconds = currentDate.getSeconds();
 const formattedDate = `${day}${month}${year}`;
-const formattedTime = `${hour}${minute}${seconds}`
+const formattedTime = `${hour}${minute}${seconds}`;
 
 //Khai báo các thông tin 
-const url_base = 'http://222.252.17.162:8080/v1/sandbox/services/paybill'
+const url_base = 'http://222.252.17.162:8080/v1/sandbox/services/paybill';
 
 const username = 'integrate_account';
 const password = 'a1ec3b73f427c514ab64ce99c891b73f';
@@ -63,9 +63,9 @@ describe('AUTOPAYBILL PAYBILL', () => {
     // const billing_code = 'PD100000';
     const data_getBill = 'get_bill'+ '#'+ username + '#' + password +'#' + rqID + '#' +billing_code+ '#' + service_code;
     const signature = signDataWithRSA(data_getBill,privateKeyData);
-    cy.log(data_getBill)
-    cy.log(signature)
-    cy.getBILL(username,password,service_code,billing_code,rqID,signature,url_base)
+    cy.log(data_getBill);
+    cy.log(signature);
+    cy.getBILL(username,password,service_code,billing_code,rqID,signature,url_base);
 });
   it('PAYBILL', () => {
     const reference_code = Cypress.env('reference_code');
