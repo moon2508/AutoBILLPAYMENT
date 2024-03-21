@@ -39,8 +39,13 @@ const currentDate = new Date();
 const year = currentDate.getFullYear();
 const month = currentDate.getMonth() + 1; // Month is zero-based, so add 1
 const day = currentDate.getDate();
+const hour = currentDate.getHours();
+const minute = currentDate.getMinutes();
+const seconds = currentDate.getSeconds();
 const formattedDate = `${day}${month}${year}`;
-const requestID = 'HangPTDV_CHECKBALANCE' + randomNum  + formattedDate + randomNum;
+const formattedTime = `${hour}${minute}${seconds}`
+
+const requestID = 'HangPTDV_CHECKBALANCE'  + formattedDate +formattedTime+ randomNum;
 //Khai báo các thông tin 
 const url_base = 'http://222.252.17.162:8080/v1/sandbox/services/paybill'
 

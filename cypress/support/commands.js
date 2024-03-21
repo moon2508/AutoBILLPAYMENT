@@ -23,6 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+const publicKey = `-----BEGIN PUBLIC KEY-----
+MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgGP+PCw4YRkXx+tS3S/cIHEdPa1eGcNAoeFVnUzrbmx6zE7PbNwixBsmkrzn2FnkCx9MdCXDbUPt72axoKeBDl10ARM8NpWMoj+s2OEy3LsZvNId5uyyg24BL/EXJ9zqqwkJDZr8p1lzQuqWca1dVlMfJRY9Xa7cHtfV9Js/Hl8DAgMBAAE=
+-----END PUBLIC KEY-----`;
 Cypress.Commands.add('getBILL', (username,password,service_code,billing_code,rqID,signature,url_base)=>{
     cy.request({
         method: 'POST',
@@ -45,7 +48,12 @@ Cypress.Commands.add('getBILL', (username,password,service_code,billing_code,rqI
         expect(response.status).to.eq(200);
         cy.log('Response body:'+ JSON.stringify(response.body, null, 2));
         cy.log(response.body.data.reference_code)
+        const data = cy.log(response.body.data);
+        const signature = cy.log(response.body.signature);
+        Cypress.env('reference_code', response.body.data.reference_code);
         
+        
+    
    
     });
 })
@@ -81,4 +89,16 @@ Cypress.Commands.add('payBILL', (username,password,service_code,billing_code,rqI
    
     });
 })
+
+const crypto = require('crypto');
+
+Cypress.Commands.add('verifySignature', (data, signature, publicKey) => {
+  const verifier = crypto.createVerify('RSA-SHA256');
+  verifier.update(data);
+  const signatureBuffer = Buffer.from(signature, 'base64');
+  const publicKeyBuffer = Buffer.from(publicKey, 'utf8');
+  const isValid = verifier.verify(publicKeyBuffer, signatureBuffer);
+  return isValid ? 'Verify hợp lệ' : 'Verify sai';
+});
+
 

@@ -39,21 +39,28 @@ const currentDate = new Date();
 const year = currentDate.getFullYear();
 const month = currentDate.getMonth() + 1; // Month is zero-based, so add 1
 const day = currentDate.getDate();
+const hour = currentDate.getHours();
+const minute = currentDate.getMinutes();
+const seconds = currentDate.getSeconds();
 const formattedDate = `${day}${month}${year}`;
+const formattedTime = `${hour}${minute}${seconds}`
 
 //Khai báo các thông tin 
 const url_base = 'http://222.252.17.162:8080/v1/sandbox/services/paybill'
 
 const username = 'integrate_account';
 const password = 'a1ec3b73f427c514ab64ce99c891b73f';
+const service_code = 'TV_FPT';
+const billing_code = 'PD100000';
+    const amount = '100000';
 
 describe('AUTOPAYBILL PAYBILL', () => {
   it('GETBILL',() => {
-    const requestID = 'HangPTDV_GETBILL_' + randomNum  + formattedDate + randomNum;
+    const requestID = 'HangPTDV_GETBILL_'  + formattedDate +formattedTime;
     const rqID = requestID;
     cy.log(rqID);
-    const service_code = 'TV_FPT';
-    const billing_code = 'PD100000';
+    
+    // const billing_code = 'PD100000';
     const data_getBill = 'get_bill'+ '#'+ username + '#' + password +'#' + rqID + '#' +billing_code+ '#' + service_code;
     const signature = signDataWithRSA(data_getBill,privateKeyData);
     cy.log(data_getBill)
@@ -63,14 +70,13 @@ describe('AUTOPAYBILL PAYBILL', () => {
   it('PAYBILL', () => {
     const reference_code = Cypress.env('reference_code');
     cy.log('reference_code:'+ reference_code);
-    const requestID = 'HangPTDV_PAYBILL_' + randomNum  + formattedDate ;
+    const requestID = 'HangPTDV_PAYBILL_' + formattedDate +formattedTime+ randomNum ;
     const rqID = requestID;
     cy.log('REQUESTID: '+rqID);
     Cypress.env('requestID_old', rqID);
 
-    const service_code = 'TV_FPT';
-    const billing_code = 'PD100000';
-    const amount = '100000';
+    // const service_code = 'TV_FPT';
+    
     const data_getBill = 'pay_bill'+ '#'+ username + '#' + password +'#' + rqID + '#' +billing_code+ '#' + service_code+ '#'+reference_code+ '#'+ amount;
     const signature = signDataWithRSA(data_getBill,privateKeyData);
     cy.log(data_getBill)
@@ -82,15 +88,15 @@ describe('AUTOPAYBILL PAYBILL', () => {
 
 it('CHECK PAYBILL', () => {
   const requestID_old = Cypress.env('requestID_old');
-  const requestID = 'HangPTDV_CHECKPAY_' + formattedDate + randomNum;
+  const requestID = 'HangPTDV_CHECKPAY_' + + formattedDate +formattedTime+ randomNum*randomNum;
   const rqID = requestID;
   cy.log('REQUEST ID: '+ rqID);
   cy.log('REQUEST ID OLD: '+ requestID_old);
   
 
-  const service_code = 'TV_FPT';
-  const billing_code = 'PD100000';
-  const amount = '100000';
+  // const service_code = 'TV_FPT';
+  // const billing_code = 'PD100000';
+  // const amount = '100000';
   const data_getBill = 'check_pay'+ '#'+ username + '#' + password +'#' + rqID + '#' +requestID_old;
   const signature = signDataWithRSA(data_getBill,privateKeyData);
   cy.log(data_getBill)
