@@ -52,18 +52,17 @@ const username = 'integrate_account';
 const password = 'a1ec3b73f427c514ab64ce99c891b73f';
 
 
-function getbill_gateway(username,password,service_code,billing_code,url_base){
-    const rqID = getRequestId('HangPTDV_GETBILL_');
-      cy.log("RequestID: "+ rqID);
-    const data_getBill = 'get_bill' + '#' + username + '#' + password + '#' + rqID + '#' + billing_code + '#' + service_code; 
-    cy.log("DataGenerateSignature: "+ data_getBill);
-    const signature = signDataWithRSA(data_getBill,privateKeyData);
-      
-      cy.log(  'Signature:' + signature);
-      cy.getBILL(username,password,service_code,billing_code,rqID,signature,url_base);
+function getbill_gateway_VNP_combo(username,password,service_code,billing_code,url_base){
+  const rqID = getRequestId('HangPTDV_GETBILL_');
+    cy.log("RequestID: "+ rqID);
+  const data_getBill = 'get_bill' + '#' + username + '#' + password + '#' + rqID + '#' + billing_code + '#' + service_code; 
+  cy.log("DataGenerateSignature: "+ data_getBill);
+  const signature = signDataWithRSA(data_getBill,privateKeyData);
+    
+    cy.log(  'Signature:' + signature);
+    cy.getBILL_VNP_Combo(username,password,service_code,billing_code,rqID,signature,url_base);
 
 }
-
 
 function paybill_gateway(username,password,service_code,billing_code,amount,url_base){
     // get reference_code from GETBLL
@@ -82,16 +81,47 @@ function paybill_gateway(username,password,service_code,billing_code,amount,url_
     cy.payBILL(username,password,service_code,billing_code,rqID,reference_code,signature,amount,url_base);
 
 }
-function gateway_PAYMENT(username,password,service_code,billing_code,url_base){
-    describe('AUTOPAYBILL GETBILL', () => {
+function order_gateway(username,password,service_code,billing_code,amount,url_base, productCode, productId, productValue){
+    // get reference_code from GETBLL
+    const reference_code = Cypress.env('reference_code');   
+     
+    cy.log('reference_code_paybill:'+ reference_code);
+    
+  
+    const rqID = getRequestId('HangPTDV_ORDER_')
+    cy.log("RequestID: "+ rqID);
+    
+    const data_payBill = 'pay_bill'+ '#'+ username + '#' + password +'#' + rqID + '#' +billing_code+ '#' + service_code+ '#'+reference_code+ '#'+ amount;
+    const signature = signDataWithRSA(data_payBill,privateKeyData);
+    cy.log("DataGenerateSignature: "+ data_payBill)
+    cy.log(  'Signature:' + signature);
+    cy.orderVNP_Combo(username,password,service_code,billing_code,rqID,reference_code,signature,amount,url_base, productCode, productId, productValue);
+
+}
+function paybillVNP_gateway(username,password,service_code,billing_code,amount,url_base, productCode, productId, productValue, otp){
+    // get reference_code from GETBLL
+    const reference_code = Cypress.env('reference_code');   
+    cy.log('reference_code_paybill:'+ reference_code);
+    const rqID = getRequestId('HangPTDV_PAYBILL_');
+    cy.log("RequestID: "+ rqID);
+    
+    const data_payBill = 'pay_bill'+ '#'+ username + '#' + password +'#' + rqID + '#' +billing_code+ '#' + service_code+ '#'+reference_code+ '#'+ amount;
+    const signature = signDataWithRSA(data_payBill,privateKeyData);
+    cy.log("DataGenerateSignature: "+ data_payBill)
+    cy.log(  'Signature:' + signature);
+    cy.paybillVNP_Combo(username,password,service_code,billing_code,rqID,reference_code,signature,amount,url_base, productCode, productId, productValue,otp);
+
+}
+function gateway_PAYMENT_VNP_Combo(username,password,service_code,billing_code,url_base,otp){
+    describe('AUTOPAYBILL PAYBILL VNP COMBO', () => {
         beforeEach(() => {
             // getbill_gateway(username,password,'KPLUS','135220683434',url_base);
-            getbill_gateway(username,password,service_code,billing_code,url_base);
+            getbill_gateway_VNP_combo(username,password,service_code,billing_code,url_base);
     
         });
     
-        it.skip('Scenarios: GETBILL', () => {
-          getbill_gateway(username,password,service_code,billing_code,url_base);
+        it.skip('Scenarios: GETBILL VNP COMBO', () => {
+          getbill_gateway_VNP_combo(username,password,service_code,billing_code,url_base);
     
         //GETBILL K+
         //   getbill_gateway(username,password,'KPLUS','135220683434',url_base);
@@ -105,32 +135,42 @@ function gateway_PAYMENT(username,password,service_code,billing_code,url_base){
          
       });
     
-      it('Scenarios: PAYBILL',()=>{
+      it.skip('Scenarios: order VNP',()=>{
         const amount = Cypress.env('amount_getbill');  
         cy.log('amount_paybill:'+ amount);
-        const amount_TV = Cypress.env('amount_getbill_TV');  
-        cy.log('amount_paybill_TV:'+ amount_TV);
-        
-        if(service_code = 'KPLUS'){
-            paybill_gateway(username,password,service_code,billing_code,amount_TV,url_base);
-        }else{
-            paybill_gateway(username,password,service_code,billing_code,amount,url_base);
-        }
-        // paybill EVN
-        // paybill_gateway(username,password,'EVN','PD100000',amount,url_base);
-        // paybill K+
-        // paybill_gateway(username,password,'KPLUS','135220683434',amount_TV,url_base);
+
+        const productId = Cypress.env('productId');  
+        cy.log('productId_paybill:'+ productId);
+        const productCode = Cypress.env('productCode');  
+        cy.log('productCode_paybill:'+ productCode);
+        const productValue = Cypress.env('productValue');  
+        cy.log('productValue_paybill:'+ productValue);
+
+        order_gateway(username,password,service_code,billing_code,amount,url_base, productCode, productId, productValue);
     
         
     
       });
+      it('Scenarios: paybill VNP',()=>{
+        const amount = Cypress.env('amount_getbill');  
+        cy.log('amount_paybill:'+ amount);
+
+        const productId = Cypress.env('productId');  
+        cy.log('productId_paybill:'+ productId);
+        const productCode = Cypress.env('productCode');  
+        cy.log('productCode_paybill:'+ productCode);
+        const productValue = Cypress.env('productValue');  
+        cy.log('productValue_paybill:'+ productValue);
+
+        paybillVNP_gateway(username,password,service_code,billing_code,productValue,url_base, productCode, productId, productValue, otp);
+    
+        
+    
+      });
+      
     
     });
 }
 
 
-
-// gateway_PAYMENT(username,password,'EVN','PD100000',url_base);
-gateway_PAYMENT(username,password,'KPLUS','135220683434',url_base);
-// gateway_PAYMENT(username,password,'POSTPAID_TELCO_VMS','0905675678',url_base);
-// gateway_PAYMENT(username,password,'VINAPHONE_COMBO','0889399084',url_base);
+gateway_PAYMENT_VNP_Combo(username,password,'VINAPHONE_COMBO','0889399084',url_base,'1122');

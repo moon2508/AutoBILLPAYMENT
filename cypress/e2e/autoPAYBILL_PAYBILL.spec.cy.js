@@ -65,7 +65,7 @@ const billing_code = '135220683434';
 
 describe('AUTOPAYBILL PAYBILL', () => {
   beforeEach(() => {
-    const requestID = 'HangPTDV_GETBILL_TPB' +formattedDate+ formattedTime+ randomNum;
+    const requestID = 'HangPTDV_GETBILL_' +formattedDate+ formattedTime+ randomNum;
     const rqID = requestID;
     cy.log(rqID);
     // const service_code = 'TPB';
@@ -89,7 +89,8 @@ describe('AUTOPAYBILL PAYBILL', () => {
     cy.log(rqID);
     // const service_code = 'TPB';
     
-    const amount = '2000000';
+    const amount = Cypress.env('amount_getbill');  
+    cy.log('amount_paybill:'+ amount);
     const data_getBill = 'pay_bill'+ '#'+ username + '#' + password +'#' + rqID + '#' +billing_code+ '#' + service_code+ '#'+reference_code+ '#'+ amount;
     const signature = signDataWithRSA(data_getBill,privateKeyData);
     cy.log(data_getBill)

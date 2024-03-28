@@ -64,7 +64,8 @@ describe('AUTOPAYBILL GETBILL', () => {
     const signature = signDataWithRSA(data_getBill,privateKeyData);
     cy.log(data_getBill);
     cy.log(signature);
-    cy.getBILL(username,password,'KPLUS','135220683434',rqID,signature,url_base);//gw KPlus
+    // cy.getBILL(username,password,'KPLUS','135220683434',rqID,signature,url_base);//gw KPlus
+    cy.getBILL(username,password,'VINAPHONE_COMBO','0889399084',rqID,signature,url_base);//gw KPlus
     // cy.getBILL(username,password,'POSTPAID_TELCO_VNP','0911231234',rqID,signature,url_base);
     // cy.getBILL(username,password,'POSTPAID_TELCO_VMS','0936225202',rqID,signature,url_base);
     // cy.getBILL(username,password,service_code,billing_code,rqID,signature,url_base);
