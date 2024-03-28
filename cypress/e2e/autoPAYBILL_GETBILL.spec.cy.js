@@ -44,9 +44,12 @@ const minute = currentDate.getMinutes();
 const seconds = currentDate.getSeconds();
 const formattedDate = `${day}${month}${year}`;
 const formattedTime = `${hour}${minute}${seconds}`;
-const requestID = 'HangPTDV_GETBILL_TBP' + formattedDate + formattedTime + randomNum;
+const requestID = 'HangPTDV_GETBILL_' + formattedDate + formattedTime + randomNum;
 //Khai báo các thông tin 
-const url_base = 'http://192.168.100.151:8080/v1/sandbox/services/paybill'
+// const url_base = 'http://192.168.100.151:8080/v1/sandbox/services/paybill'
+const url_base = 'http://222.252.17.162:8080/v1/sandbox/services/paybill';
+// const url_base = 'http://192.168.100.192:7890/v1/services/paybill';
+
 
 const username = 'integrate_account';
 const password = 'a1ec3b73f427c514ab64ce99c891b73f';
@@ -55,13 +58,16 @@ describe('AUTOPAYBILL GETBILL', () => {
   it('GETBILL', () => {
     const rqID = requestID;
     cy.log(rqID);
-    const service_code = 'TPB';
-    const billing_code = 'PD100000';
+    const service_code = 'KPLUS';
+    const billing_code = '135220683434';
     const data_getBill = 'get_bill'+ '#'+ username + '#' + password +'#' + rqID + '#' +billing_code+ '#' + service_code;
     const signature = signDataWithRSA(data_getBill,privateKeyData);
     cy.log(data_getBill);
     cy.log(signature);
-    cy.getBILL(username,password,service_code,billing_code,rqID,signature,url_base);
+    cy.getBILL(username,password,'KPLUS','135220683434',rqID,signature,url_base);//gw KPlus
+    // cy.getBILL(username,password,'POSTPAID_TELCO_VNP','0911231234',rqID,signature,url_base);
+    // cy.getBILL(username,password,'POSTPAID_TELCO_VMS','0936225202',rqID,signature,url_base);
+    // cy.getBILL(username,password,service_code,billing_code,rqID,signature,url_base);
     // cy.verifySignature(data, signature, publicKey).then(result => {
     //   expect(result).to.equal('Verify hợp lệ');
     // });

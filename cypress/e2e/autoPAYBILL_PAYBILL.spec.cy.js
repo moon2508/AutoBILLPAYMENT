@@ -51,7 +51,17 @@ const url_base = 'http://222.252.17.162:8080/v1/sandbox/services/paybill';
 
 const username = 'integrate_account';
 const password = 'a1ec3b73f427c514ab64ce99c891b73f';
-const service_code = 'TPB';
+// const service_code = 'TPB';
+// const billing_code = 'PD100000';
+
+const service_code = 'KPLUS';
+const billing_code = '135220683434';
+
+// const service_code = 'POSTPAID_TELCO_VMS';
+// const billing_code = '0905675678';
+
+// const service_code = 'POSTPAID_TELCO_VNP';
+// const billing_code = '0914564322';
 
 describe('AUTOPAYBILL PAYBILL', () => {
   beforeEach(() => {
@@ -59,12 +69,13 @@ describe('AUTOPAYBILL PAYBILL', () => {
     const rqID = requestID;
     cy.log(rqID);
     // const service_code = 'TPB';
-    const billing_code = 'PD100000';
+    
     const data_getBill = 'get_bill'+ '#'+ username + '#' + password +'#' + rqID + '#' +billing_code+ '#' + service_code;
     const signature = signDataWithRSA(data_getBill,privateKeyData);
     cy.log(data_getBill);
     cy.log(signature)
     cy.getBILL(username,password,service_code,billing_code,rqID,signature,url_base);
+    // cy.getBILL(username,password,service_code,billing_code,rqID,signature,url_base);
     
 });
 
@@ -73,22 +84,17 @@ describe('AUTOPAYBILL PAYBILL', () => {
     cy.wait(500);
     const reference_code = Cypress.env('reference_code');
     cy.log('reference_code:'+ reference_code);
-    const requestID = 'HangPTDV_PAYBILL_TBP_'+formattedDate+ formattedTime+ randomNum*randomNum;
+    const requestID = 'HangPTDV_PAYBILL_'+formattedDate+ formattedTime+ randomNum*randomNum;
     const rqID = requestID;
     cy.log(rqID);
     // const service_code = 'TPB';
-    const billing_code = 'PD100000';
-    const amount = '100000';
+    
+    const amount = '2000000';
     const data_getBill = 'pay_bill'+ '#'+ username + '#' + password +'#' + rqID + '#' +billing_code+ '#' + service_code+ '#'+reference_code+ '#'+ amount;
     const signature = signDataWithRSA(data_getBill,privateKeyData);
     cy.log(data_getBill)
     cy.log(signature)
     cy.payBILL(username,password,service_code,billing_code,rqID,reference_code,signature,amount,url_base);
 });
-
-
-
-
-
 
 });
