@@ -147,6 +147,7 @@ function gateway_PAYMENT_VNP_Combo(username,password,service_code,billing_code,u
         cy.log('productValue_paybill:'+ productValue);
 
         order_gateway(username,password,service_code,billing_code,amount,url_base, productCode, productId, productValue);
+        // cy.pause();
         paybillVNP_gateway(username,password,service_code,billing_code,productValue,url_base, productCode, productId, productValue, otp);
     
         
@@ -163,7 +164,7 @@ function gateway_PAYMENT_VNP_Combo(username,password,service_code,billing_code,u
         const productValue = Cypress.env('productValue');  
         cy.log('productValue_paybill:'+ productValue);
 
-        paybillVNP_gateway(username,password,service_code,billing_code,productValue,url_base, productCode, productId, productValue, otp);
+        paybillVNP_gateway(username,password,service_code,billing_code,productValue,url_base, productCode, productId, productValue, "213223");
     
         
     
@@ -174,4 +175,5 @@ function gateway_PAYMENT_VNP_Combo(username,password,service_code,billing_code,u
 }
 
 
-gateway_PAYMENT_VNP_Combo(username,password,'VINAPHONE_COMBO','0889399084',url_base,'123456');
+// gateway_PAYMENT_VNP_Combo(username,password,'VINAPHONE_COMBO','0889399084',url_base,'123456');
+gateway_PAYMENT_VNP_Combo(username,password,'VINAPHONE_COMBO','0949939590',url_base,'271466');

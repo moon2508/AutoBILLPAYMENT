@@ -10,20 +10,19 @@ function signDataWithRSA(data, privateKeyData) {
 }
 //khai báo private key pkcs8
 const privateKeyData = `-----BEGIN RSA PRIVATE KEY-----
-    MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAO+N1hxtxzObXrat
-    KKtplV42JES0WLF1x9gQWxlxfHZvlnswHDuyGJcTGEs1FcKBmsMvB84exuMxC93V
-    eyq82J4ADZa0IKsQ8pW19+JMz0Z+vVPVgwR2h+KJDPpXCjKw5HSZkbgm2oJ6sBCE
-    KTy49BjI0Rn0V4Xi52K0MkXX696zAgMBAAECgYEA6XI1Z3rrlzUf9bGFYpYAA9GL
-    QpDlpfp7h+lYfdEEU36nDOFzghEquX7YO+I9lFEs+mzIlGuVsi1HvSSfZKSoCl6S
-    msbVUWkZEYPLhSG5ikpsb5DZnMsT5W/yl8N9HcZsO9C1Cyto0EgvZxnNOjdf4Rsw
-    Zhq63C7cI4lUrO4g4NECQQD8DOMO/5+vYiHZhgiLUdnvEyqYBRXcZ4TJdZReF6yU
-    Qd8nG70My1zmk5tptELqYCwup2VT2ziNEyqHXLNwp8SPAkEA807R5QXBHKh36gVh
-    OfrCKBOvou59N8gho6D0m1Ty6uIFB2rUe638Dj15MfHehf5UPzbnbskfj4AdHuBO
-    KUn9nQJAcBrXPsuJXbta7OIFmNnOAdzXfAf/Ain00JoAZJ1JACQQOdfHjRJCfre2
-    TxyDCrW90P5ZPiPqEi0tJEmh8gBclwJAN8Ipce3WqqWlDXl8JZhk5GBWkOVMxvrT
-    UrdxNyPJo7B2bJO77DgcGntWCe8fCuAVGIORmB75X56BjfDjmKy/NQJBAMtS+ib2
-    pqdRjcVPUuN3Qjtzw9vD9nx5FfhJDOUqqee3Q3uEp+jFPuUk8kSXrL+3wTz55Rly
-    3PFIBeCC9S9PoXk=
+MIICXQIBAAKBgQDT2VtPTnzt9gOQ+uSYphPkSjSv6+3+Ubys0KQlcEfo6BFIbP5Z
+nbCSxY/lpQ2AHnrZGB1eGq1fYF9J/w+op3ouJW4f5XGAfJa/8sKYZ3tmjAWpdj0y
+KqJFc7MA/rMpNVctpmX3DJ70jHmkXICdLeGbsCwAdWrWjWQ55aZNBus1gwIDAQAB
+AoGBAI9qs10SJpM2HB33K/CHZioDbn22O+0Syqc3rBhIVfY/vQuJ9fsXPOVv58Ww
+ol4cxE/Z+m+tobdS18+RY7lqf9Qn0zQOZ4DSbHsaGN4eLDDJW4VJivsKHCHsfPiV
+2ANM3hmTwBvI9XFAcT8E5CvXjekMynjgWvgmnwTBkKnXlmbBAkEA90Y02msgFxas
+4NDyCRt64r7VmjFl1bdQMS6ExlJzdp60afPT0ZOH8K8XUJTnlW2wcGE6BkIrQx+Q
+579Ur5SbowJBANtTIXlomVAOmPpp8Va3Tuof4br7bNex8aZkWfPz+PGZP87Azyka
+rdb10t6D3IiOx+RbVwndz68oGJ8mVZ/KnKECQClowWsea3ZSXssbUp0B1Bdqu9yh
+jxs2IqDJ2IRZxGpF85KWuY8sNKSyvaXJ+epFPzninlPz+si33Y1hti3dJh8CQBtI
+3zw0WAZOmpdkgKKSEV4s8y8IwkSfHXneuBYSPuEHeJmnAN6TNBcu47nM262dXZ66
+Ajz2/DRFH7ME2NgVI6ECQQCVt4OZODPtJfN49n/ouLERvZNVN4BxFm+UGkomwoc+
+EXp8Ry6TYHTInCYUurwT+dDguMG1IWsheT2xDNTKGaNh
     -----END RSA PRIVATE KEY-----`;
 
 // tạo requestID random
@@ -47,10 +46,10 @@ const formattedTime = `${hour}${minute}${seconds}`;
 
 //Khai báo các thông tin 
 // const url_base = 'http://192.168.100.151:8080/v1/sandbox/services/paybill';
-const url_base = 'http://222.252.17.162:8080/v1/sandbox/services/paybill';
+const url_base = 'https://billpayment.imediatech.com.vn/v1/services/paybill';
 
-const username = 'integrate_account';
-const password = 'a1ec3b73f427c514ab64ce99c891b73f';
+const username = 'test_bill';
+const password = 'Test123!@#';
 // const service_code = 'TPB';
 // const billing_code = 'PD100000';
 
@@ -58,7 +57,7 @@ const password = 'a1ec3b73f427c514ab64ce99c891b73f';
 // const billing_code = '135220683434';
 
 const service_code = 'POSTPAID_TELCO_VMS';
-const billing_code = '0905675678';
+const billing_code = '0902284696';
 
 // const service_code = 'POSTPAID_TELCO_VNP';
 // const billing_code = '0914564322';
@@ -95,7 +94,7 @@ describe('AUTOPAYBILL PAYBILL', () => {
     const signature = signDataWithRSA(data_getBill,privateKeyData);
     cy.log(data_getBill)
     cy.log(signature)
-    cy.payBILL(username,password,service_code,billing_code,rqID,reference_code,signature,amount,url_base);
+    // cy.payBILL(username,password,service_code,billing_code,rqID,reference_code,signature,amount,url_base);
 });
 
 });

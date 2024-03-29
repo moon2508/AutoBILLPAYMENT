@@ -111,11 +111,11 @@ function gateway_PAYMENT(username,password,service_code,billing_code,url_base){
         const amount_TV = Cypress.env('amount_getbill_TV');  
         cy.log('amount_paybill_TV:'+ amount_TV);
         
-        if(service_code = 'KPLUS'){
+        if(service_code == 'KPLUS'){
             paybill_gateway(username,password,service_code,billing_code,amount_TV,url_base);
         }else{
             paybill_gateway(username,password,service_code,billing_code,amount,url_base);
-        }
+      }
         // paybill EVN
         // paybill_gateway(username,password,'EVN','PD100000',amount,url_base);
         // paybill K+
@@ -131,6 +131,6 @@ function gateway_PAYMENT(username,password,service_code,billing_code,url_base){
 
 
 // gateway_PAYMENT(username,password,'EVN','PD100000',url_base);
-gateway_PAYMENT(username,password,'KPLUS','135220683434',url_base);
-// gateway_PAYMENT(username,password,'POSTPAID_TELCO_VMS','0905675678',url_base);
-// gateway_PAYMENT(username,password,'VINAPHONE_COMBO','0889399084',url_base);
+// gateway_PAYMENT(username,password,'KPLUS','135220683434',url_base);
+gateway_PAYMENT(username,password,'POSTPAID_TELCO_VMS','0905675678',url_base);
+// gateway_PAYMENT(username,password,'POSTPAID_TELCO_VNP','0914564322',url_base);
