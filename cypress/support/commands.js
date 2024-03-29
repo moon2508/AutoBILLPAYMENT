@@ -169,9 +169,7 @@ Cypress.Commands.add('paybillVNP_Combo', (username,password,service_code,billing
       method: 'POST',
       url: url_base,
       headers: {
-        'Content-Type': 'application/json',
-
-       
+        'Content-Type': 'application/json', 
       },
       body: `
       {
@@ -186,7 +184,7 @@ Cypress.Commands.add('paybillVNP_Combo', (username,password,service_code,billing
             "authkey": "${signature}",
             "amount": ${amount},
             "contact_id": "0912345678",
-            "selectedItems":[{"productId":"${productId}","productCode":"${productCode}","productValue":${productValue}}],
+            // "selectedItems":[{"productId":"${productId}","productCode":"${productCode}","productValue":${productValue}}],
             "otp":"${otp}"
         }
     }
