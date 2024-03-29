@@ -32,10 +32,11 @@ Cypress.Commands.add('getBILL', (username,password,service_code,billing_code,rqI
       }).then((response) => {
         // Kiểm tra phản hồi
         expect(response.status).to.eq(200);
+        expect(response.body.data.final_status).to.eq("00");
         
         
-          cy.log("Amount_getbill_TV: "+ response.body.data.billingDetail[1].billAmount);
-          Cypress.env('amount_getbill_TV', response.body.data.billingDetail[1].billAmount);
+          cy.log("Amount_getbill_TV: "+ response.body.data.billingDetail[0].billAmount);
+          Cypress.env('amount_getbill_TV', response.body.data.billingDetail[0].billAmount);
        
           cy.log('Response body:'+ JSON.stringify(response.body, null, 2));
           cy.log("Reference_code_getbill: "+ response.body.data.reference_code);
@@ -86,6 +87,8 @@ Cypress.Commands.add('payBILL', (username,password,service_code,billing_code,rqI
       }).then((response) => {
         // Kiểm tra phản hồi
         expect(response.status).to.eq(200);
+        expect(response.body.data.final_status).to.eq("00");
+
         cy.log('Response body:'+ JSON.stringify(response.body, null, 2));
    
     });

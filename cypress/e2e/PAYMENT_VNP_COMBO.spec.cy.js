@@ -135,7 +135,7 @@ function gateway_PAYMENT_VNP_Combo(username,password,service_code,billing_code,u
          
       });
     
-      it.skip('Scenarios: order VNP',()=>{
+      it('Scenarios: order VNP',()=>{
         const amount = Cypress.env('amount_getbill');  
         cy.log('amount_paybill:'+ amount);
 
@@ -173,4 +173,4 @@ function gateway_PAYMENT_VNP_Combo(username,password,service_code,billing_code,u
 }
 
 
-gateway_PAYMENT_VNP_Combo(username,password,'VINAPHONE_COMBO','0889399084',url_base,'1122');
+gateway_PAYMENT_VNP_Combo(username,password,'VINAPHONE_COMBO','0889399084',url_base,'112');
