@@ -116,10 +116,13 @@ Cypress.Commands.add('getBILL_VNP_Combo', (username,password,service_code,billin
     }).then((response) => {
       // Kiểm tra phản hồi
       expect(response.status).to.eq(200);
-      const datacombo = response.body.data.payment_info[1];
-      
-        cy.log('Response body:'+ JSON.stringify(response.body, null, 2));
+      // cy.wait(100);
+         cy.log('Response body:'+ JSON.stringify(response.body, null, 2));
         cy.log("Reference_code_getbill: "+ response.body.data.reference_code);
+
+      const datacombo = response.body.data.payment_info[0];
+      
+     
         cy.log("Amount_getbill: "+ response.body.data.amount);
         cy.log("ProductID_getbill: "+ datacombo.productId);
         cy.log("ProductCode_getbill: "+ datacombo.productCode);
@@ -153,9 +156,9 @@ Cypress.Commands.add('orderVNP_Combo', (username,password,service_code,billing_c
             "partner_trans_id": "${rqID}",
             "reference_code": "${reference_code}",
             "authkey": "${signature}",
-            "amount": ${amount},
+            // "amount": ${amount},
             "contact_id": "0912345678",
-            "selectedItems":[{"productId":"${productId}","productCode":"${productCode}","productValue":${productValue}}]
+            "selectedItems":[{"productId":${productId},"productCode":"${productCode}","productValue":${productValue}}]
         }
     }
         `,
@@ -186,8 +189,8 @@ Cypress.Commands.add('paybillVNP_Combo', (username,password,service_code,billing
             "authkey": "${signature}",
             "amount": ${amount},
             "contact_id": "0912345678",
-            // "selectedItems":[{"productId":"${productId}","productCode":"${productCode}","productValue":${productValue}}],
-            "otp":"${otp}"
+            "selectedItems":[{"productId":${productId},"productCode":"${productCode}","productValue":${productValue}, "selected": true}]
+            // "otp":"${otp}"
         }
     }
         `,

@@ -53,7 +53,7 @@ const password = 'a1ec3b73f427c514ab64ce99c891b73f';
 
 
 function getbill_gateway_VNP_combo(username,password,service_code,billing_code,url_base){
-  const rqID = getRequestId('HangPTDV_GETBILL_');
+  const rqID = getRequestId('HangPTDV_GET_');
     cy.log("RequestID: "+ rqID);
   const data_getBill = 'get_bill' + '#' + username + '#' + password + '#' + rqID + '#' + billing_code + '#' + service_code; 
   cy.log("DataGenerateSignature: "+ data_getBill);
@@ -102,14 +102,14 @@ function paybillVNP_gateway(username,password,service_code,billing_code,amount,u
     // get reference_code from GETBLL
     const reference_code = Cypress.env('reference_code');   
     cy.log('reference_code_paybill:'+ reference_code);
-    const rqID = getRequestId('HangPTDV_PAYBILL_');
+    const rqID = getRequestId('HangPTDV_PAY_');
     cy.log("RequestID: "+ rqID);
     
     const data_payBill = 'pay_bill'+ '#'+ username + '#' + password +'#' + rqID + '#' +billing_code+ '#' + service_code+ '#'+reference_code+ '#'+ amount;
     const signature = signDataWithRSA(data_payBill,privateKeyData);
     cy.log("DataGenerateSignature: "+ data_payBill)
     cy.log(  'Signature:' + signature);
-    cy.paybillVNP_Combo(username,password,service_code,billing_code,rqID,reference_code,signature,amount,url_base, productCode, productId, productValue,otp);
+    // cy.paybillVNP_Combo(username,password,service_code,billing_code,rqID,reference_code,signature,amount,url_base, productCode, productId, productValue,otp);
 
 }
 function gateway_PAYMENT_VNP_Combo(username,password,service_code,billing_code,url_base,otp){
@@ -117,6 +117,7 @@ function gateway_PAYMENT_VNP_Combo(username,password,service_code,billing_code,u
         beforeEach(() => {
             // getbill_gateway(username,password,'KPLUS','135220683434',url_base);
             getbill_gateway_VNP_combo(username,password,service_code,billing_code,url_base);
+            // cy.wait(500);
     
         });
     
@@ -139,15 +140,15 @@ function gateway_PAYMENT_VNP_Combo(username,password,service_code,billing_code,u
         const amount = Cypress.env('amount_getbill');  
         cy.log('amount_paybill:'+ amount);
 
-        const productId = Cypress.env('productId');  
+        const productId =  Cypress.env('productId');  
         cy.log('productId_paybill:'+ productId);
-        const productCode = Cypress.env('productCode');  
+        const productCode =  Cypress.env('productCode');  
         cy.log('productCode_paybill:'+ productCode);
         const productValue = Cypress.env('productValue');  
         cy.log('productValue_paybill:'+ productValue);
 
-        order_gateway(username,password,service_code,billing_code,amount,url_base, productCode, productId, productValue);
-        // cy.pause();
+        // order_gateway(username,password,service_code,billing_code,amount,url_base, productCode, productId, productValue);
+        // cy.wait(5000);
         paybillVNP_gateway(username,password,service_code,billing_code,productValue,url_base, productCode, productId, productValue, otp);
     
         

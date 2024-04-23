@@ -132,5 +132,6 @@ function gateway_PAYMENT(username,password,service_code,billing_code,url_base){
 
 // gateway_PAYMENT(username,password,'EVN','PD100000',url_base);
 // gateway_PAYMENT(username,password,'KPLUS','135220683434',url_base);
-gateway_PAYMENT(username,password,'POSTPAID_TELCO_VMS','0905675678',url_base);
+// gateway_PAYMENT(username,password,'POSTPAID_TELCO_VMS','0905675678',url_base);
 // gateway_PAYMENT(username,password,'POSTPAID_TELCO_VNP','0914564322',url_base);
+gateway_PAYMENT(username,password,'VINAPHONE_COMBO','0949939590',url_base);
